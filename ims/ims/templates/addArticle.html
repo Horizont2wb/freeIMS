@@ -1,7 +1,43 @@
 {% extends 'base.html'%}
-
-
-
 {%block content%}
+
+
+
+<form>
+   
+    <div class="form-group row-xs-2">
+      <div class="col">
+        <label >Barcode</label>
+        <input type="text" class="form-control" placeholder="Barcode">
+      </div>
+    </br>
+      <div class="col">
+        <label >Bezeichnung</label>
+        <input type="text" class="form-control" placeholder="Bezeichnung">
+      </div>
+    </br>
+      <div class="col">
+        <label >Kategorie</label>
+        <input type="text" class="form-control" placeholder="Kategorie">
+      </div>
+    </br>
+      <div class="col">
+        <label >Lagerbestand</label>
+        <input type="text" class="form-control" placeholder="Lagerbestand">
+      </div>
+    </br>
+      <div class="col">
+        <label >Mindestbestand</label>
+        <input type="text" class="form-control" placeholder="Mindestbestand">
+      </div>
+    </br>
+
+    </div>
+    <center>
+    <button type="button" class="btn btn-primary">Best&auml;tigen</button>
+    <button type="button" class="btn btn-danger">Abbrechen</button>
+    </center>
+  </form>
+
 
 {%endblock%}
