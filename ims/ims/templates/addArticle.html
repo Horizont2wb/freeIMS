@@ -19,6 +19,23 @@
       <div class="col">
         <label >Kategorie</label>
         <input type="text" class="form-control" placeholder="Kategorie" name="Kategorie" required>
+
+
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Kategorien &Ouml;ffnen
+          </button>
+          <ul class="dropdown-menu">
+            {%for category in lager %}
+            <li><a class="dropdown-item" href="#">test</a></li>
+            {%endfor%}
+            
+          </ul>
+        </div>
+
+
+
+
       </div>
     </br>
       <div class="col">
