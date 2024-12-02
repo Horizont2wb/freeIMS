@@ -8,8 +8,8 @@ class Lager(models.Model):
     Barcode = models.CharField(max_length=30)
     Bezeichnung = models.CharField(max_length=25)
     Kategorie = models.CharField(max_length=20)
-    Lagerbestand = models.IntegerField(max_length=4)
-    Mindestbestand = models.IntegerField(max_length=4)
+    Lagerbestand = models.IntegerField()
+    Mindestbestand = models.IntegerField()
 
     def __str__(self):
         return f'{self.Bezeichnung}'

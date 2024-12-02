@@ -1,11 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 from django import forms
-from .models import Lager
 from django.http import HttpResponse
+from .models import Lager
+
 
 def home(request):
     return render (request, 'home.html',{})
@@ -72,5 +73,9 @@ def addArticleData(request):
     else:
         return HttpResponse("Invalid request method.")
     
+
+def showInventory(request):
+    lager = Lager.objects.all()
+    return render(request, 'showInventory.html', {'lager': lager})
     
     
