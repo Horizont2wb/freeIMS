@@ -3,41 +3,49 @@
 
 
 
-<form>
-   
+<form method="post" action="{%url 'addArticleData' %}">
+    {% csrf_token %}
     <div class="form-group row-xs-2">
       <div class="col">
         <label >Barcode</label>
-        <input type="text" class="form-control" placeholder="Barcode">
+        <input type="text" class="form-control" placeholder="Barcode" name="Barcode"  required>
       </div>
     </br>
       <div class="col">
         <label >Bezeichnung</label>
-        <input type="text" class="form-control" placeholder="Bezeichnung">
+        <input type="text" class="form-control" placeholder="Bezeichnung" name="Bezeichnung" required>
       </div>
     </br>
       <div class="col">
         <label >Kategorie</label>
-        <input type="text" class="form-control" placeholder="Kategorie">
+        <input type="text" class="form-control" placeholder="Kategorie" name="Kategorie" required>
       </div>
     </br>
       <div class="col">
         <label >Lagerbestand</label>
-        <input type="text" class="form-control" placeholder="Lagerbestand">
+        <input type="text" class="form-control" placeholder="Lagerbestand" name="Lagerbestand"  required>
       </div>
     </br>
       <div class="col">
         <label >Mindestbestand</label>
-        <input type="text" class="form-control" placeholder="Mindestbestand">
+        <input type="text" class="form-control" placeholder="Mindestbestand" name="Mindestbestand"  required>
       </div>
     </br>
 
     </div>
     <center>
-    <button type="button" class="btn btn-primary">Best&auml;tigen</button>
-    <button type="button" class="btn btn-danger">Abbrechen</button>
+    <button type="submit" class="btn btn-primary" >Best&auml;tigen</button>
+    <button type="button" class="btn btn-danger" onClick="cancel()">Abbrechen</button>
     </center>
   </form>
 
+  <script> 
+
+    function cancel()
+    {
+        window.location.href="../"
+    }
+    
+  </script>
 
 {%endblock%}

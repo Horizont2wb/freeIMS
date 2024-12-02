@@ -12,4 +12,4 @@ class Lager(models.Model):
     Mindestbestand = models.IntegerField(max_length=4)
 
     def __str__(self):
-        return f'{self.id}'
+        return f'{self.Bezeichnung}'
