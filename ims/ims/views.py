@@ -17,7 +17,15 @@ def addArticle(request):
     unique_categories = Lager.objects.values_list('Kategorie', flat=True).distinct()
     context = {'categories': unique_categories}
     return render(request, 'addArticle.html', context)
-  
+
+def updateArticle(request,pk):
+    articleID= Lager.objects.get(id=pk)
+    unique_categories = Lager.objects.values_list('Kategorie', flat=True).distinct()
+    context = {
+        'article': articleID,
+        'categories': unique_categories
+    }
+    return render(request, 'updateArticle.html', context)
 
 
 def showInventory(request):
@@ -78,6 +86,40 @@ def addArticleData(request):
     else:
         return HttpResponse("Invalid request method.")
     
+
+def updateArticleData(request,pk):
+    if request.method =="POST":
+
+        # Get the existing article
+        article = get_object_or_404(Lager, id=pk)
+
+
+        # Retrieve form data
+        barcode = request.POST.get('Barcode')
+        bezeichnung = request.POST.get('Bezeichnung')
+        kategorie = request.POST.get('Kategorie')
+        lagerbestand = request.POST.get('Lagerbestand')
+        mindestbestand = request.POST.get('Mindestbestand')
+
+       # Update article fields
+        article.Barcode = barcode
+        article.Bezeichnung = bezeichnung
+        article.Kategorie = kategorie
+        article.Lagerbestand = lagerbestand
+        article.Mindestbestand = mindestbestand
+        
+        # Save updated article
+        article.save()
+        
+        # Redirect after successful update
+        return redirect('showInventory')
+    
+
+        return redirect('home')
+    else:
+        return HttpResponse("Invalid request method.")
+
+
 
 @require_POST
 def deleteArticle(request):

@@ -28,9 +28,9 @@
         </td>
 
         <td>
-          <button type="button"  class="btn btn-secondary" id="{{article.id}}">
+          <a class="btn btn-secondary" id="{{article.id}}" value="{{article.id}}" href="{%url 'updateArticle' article.id %}">
             Bearbeiten
-          </button>
+          </a>
         </td>
 
         <td>
@@ -66,8 +66,8 @@
 
         success: function(json)
         {
-          $('#table').html(json);
-          //location.reload();
+          
+          location.reload();
         },
         error: function(xhr, errmsg, err)
         {

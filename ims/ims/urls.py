@@ -11,6 +11,8 @@ urlpatterns = [
     path('addArticleData/', views.addArticleData, name= 'addArticleData'),
     path('delete/', views.deleteArticle, name = 'deleteArticle'),
     path('minusOne/', views.minusOne, name='minusOne'),
+    path('updateArticle/<int:pk>', views.updateArticle, name='updateArticle'),
+    path('updateArticleData/<int:pk>', views.updateArticleData, name= 'updateArticleData'),
     
     
     
