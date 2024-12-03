@@ -3,9 +3,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
-from django import forms
-from django.http import HttpResponse
-from .models import Lager
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.http import require_POST
+from .models import Lager  # Make sure to import your Lager model
 
 
 def home(request):
@@ -17,7 +17,8 @@ def addArticle(request):
 
 
 def showInventory(request):
-    return render(request, 'showInventory.html')
+    lager = Lager.objects.all()
+    return render(request, 'showInventory.html', {'lager': lager})
 
 
 
@@ -74,8 +75,16 @@ def addArticleData(request):
         return HttpResponse("Invalid request method.")
     
 
-def showInventory(request):
-    lager = Lager.objects.all()
-    return render(request, 'showInventory.html', {'lager': lager})
-    
-    
+@require_POST
+def deleteArticle(request):
+    if request.POST.get('action') == 'post':
+        try:
+            article_id = int(request.POST.get('product_id'))
+            article = Lager.objects.get(id=article_id)
+            article.delete()
+            return JsonResponse({'success': True, 'article_id': article_id})
+        except Lager.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Article not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+    return JsonResponse({'success': False, 'error': 'Invalid request'}, status=400)

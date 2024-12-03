@@ -22,7 +22,13 @@
         <td>{{article.Mindestbestand}}</td>
         <td><button type="button" class="btn btn-primary" id="{{article.id}}">Eins Herausnehmen</button></td>
         <td><button type="button"  class="btn btn-secondary" id="{{article.id}}">Bearbeiten</button></td>
-        <td><button type="button" class="btn btn-danger" id="{{article.id}}">L&ouml;schen</button></td>
+
+        <td>
+          <button type="button" data-index="{{article.id}}" class="btn btn-danger delete-article"> 
+            Artikel l&ouml;schen
+
+          </button>
+      </td>
       </tr>
       {%endfor%}
       
@@ -30,5 +36,39 @@
     </tbody>
   </table>
 
+  <script>
+    // Delete article
+    $(document).on('click','.delete-article',function(e){
+
+      // prevent that the button is clicked by default
+      e.preventDefault();
+
+      // now use ajax
+      // ajax helps us send data to the backend without refreshing the complete Website
+      $.ajax({
+        type: 'POST',
+        url:  '{% url 'deleteArticle' %}',
+        data: {
+          // Now we grab the ID of the Aricle from the data-index={{article.id}}
+          product_id: $(this).data('index'),
+          csrfmiddlewaretoken:'{{csrf_token}}',
+          action: 'post'
+        },
+
+        success: function(json)
+        {
+          //console.log(json)
+            //document.getElementById('cart_quantity').textContent = json.cqty
+            location.reload();
+        },
+        error: function(xhr, errmsg, err)
+        {
+
+        }
+      });
+    })
+
+
+  </script>
 
 {%endblock%}
