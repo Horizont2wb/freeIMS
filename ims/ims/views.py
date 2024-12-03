@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_POST
-from .models import Lager  # Make sure to import your Lager model
+from .models import Lager
 
 from django.db.models import F
 
@@ -14,7 +14,10 @@ def home(request):
 
 
 def addArticle(request):
-    return render(request, 'addArticle.html')
+    unique_categories = Lager.objects.values_list('Kategorie', flat=True).distinct()
+    context = {'categories': unique_categories}
+    return render(request, 'addArticle.html', context)
+  
 
 
 def showInventory(request):
@@ -96,15 +99,13 @@ def minusOne(request):
         try:
             article_id = int(request.POST.get('product_id'))
             updated = Lager.objects.filter(id=article_id, Lagerbestand__gt=0).update(Lagerbestand=F('Lagerbestand') - 1)
-            
-            
             if updated:
                 return JsonResponse({'success': True, 'article_id': article_id})
             else:
                 return JsonResponse({'success': False, 'error': 'Article not found or quantity already zero'}, status=400)
+            
         except ValueError:
             return JsonResponse({'success': False, 'error': 'Invalid article ID'}, status=400)
+        
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)}, status=500)
-   
-       

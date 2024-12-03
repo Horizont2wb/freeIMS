@@ -12,4 +12,6 @@ urlpatterns = [
     path('delete/', views.deleteArticle, name = 'deleteArticle'),
     path('minusOne/', views.minusOne, name='minusOne'),
     
+    
+    
 ]
