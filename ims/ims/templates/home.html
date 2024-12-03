@@ -1,12 +1,41 @@
 {%extends 'base.html'%}
 {%block content%}
 
-<p>choose between the options below:</p>
+<p><strong><h4>Hier werden die Artikel angezeigt, die den Mindestbestand erreicht haben oder darunter liegen:</h4></strong></p>
 
 
-<div>
-    
 
-</div>
+
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Barcode</th>
+        <th scope="col">Bezeichnung</th>
+        <th scope="col">Kategorie</th>
+        <th scope="col">Lagerbestand</th>
+        <th scope="col">Mindestbestand</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%for result in results%}
+      <tr>
+        <th scope="row">{{result.Barcode}}</th>
+        <td>{{result.Bezeichnung}}</td>
+        <td>{{result.Kategorie}}</td>
+        <td>{{result.Lagerbestand}}</td>
+        <td>{{result.Mindestbestand}}</td>
+        
+      </td>
+      </tr>
+      {%endfor%}
+      
+      
+    </tbody>
+  </table>
+
+
+
+
 
 {%endblock%}

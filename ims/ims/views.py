@@ -10,7 +10,8 @@ from .models import Lager
 from django.db.models import F
 
 def home(request):
-    return render (request, 'home.html',{})
+    results = Lager.objects.filter(Lagerbestand__lte=F('Mindestbestand'))
+    return render (request, 'home.html',{'results': results})
 
 
 def addArticle(request):
@@ -141,6 +142,7 @@ def minusOne(request):
         try:
             article_id = int(request.POST.get('product_id'))
             updated = Lager.objects.filter(id=article_id, Lagerbestand__gt=0).update(Lagerbestand=F('Lagerbestand') - 1)
+            
             if updated:
                 return JsonResponse({'success': True, 'article_id': article_id})
             else:
@@ -151,3 +153,6 @@ def minusOne(request):
         
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)}, status=500)
+        
+
+
