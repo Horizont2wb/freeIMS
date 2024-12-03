@@ -7,6 +7,7 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_POST
 from .models import Lager  # Make sure to import your Lager model
 
+from django.db.models import F
 
 def home(request):
     return render (request, 'home.html',{})
@@ -88,3 +89,22 @@ def deleteArticle(request):
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)}, status=500)
     return JsonResponse({'success': False, 'error': 'Invalid request'}, status=400)
+
+@require_POST
+def minusOne(request):
+    if request.POST.get('action') == 'post':
+        try:
+            article_id = int(request.POST.get('product_id'))
+            updated = Lager.objects.filter(id=article_id, Lagerbestand__gt=0).update(Lagerbestand=F('Lagerbestand') - 1)
+            
+            
+            if updated:
+                return JsonResponse({'success': True, 'article_id': article_id})
+            else:
+                return JsonResponse({'success': False, 'error': 'Article not found or quantity already zero'}, status=400)
+        except ValueError:
+            return JsonResponse({'success': False, 'error': 'Invalid article ID'}, status=400)
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+   
+       

@@ -10,5 +10,6 @@ urlpatterns = [
     path('register/', views.register_user, name='register'),
     path('addArticleData/', views.addArticleData, name= 'addArticleData'),
     path('delete/', views.deleteArticle, name = 'deleteArticle'),
+    path('minusOne/', views.minusOne, name='minusOne'),
     
 ]

@@ -2,6 +2,7 @@
 
 {%block content%}
 
+<div id="table-container">
 <table class="table">
     <thead>
       <tr>
@@ -20,13 +21,21 @@
         <td>{{article.Kategorie}}</td>
         <td>{{article.Lagerbestand}}</td>
         <td>{{article.Mindestbestand}}</td>
-        <td><button type="button" class="btn btn-primary" id="{{article.id}}">Eins Herausnehmen</button></td>
-        <td><button type="button"  class="btn btn-secondary" id="{{article.id}}">Bearbeiten</button></td>
+        <td>
+          <button type="button" data-index="{{article.id}}" class="btn btn-primary minusOne">
+            Eins Herausnehmen
+          </button>
+        </td>
+
+        <td>
+          <button type="button"  class="btn btn-secondary" id="{{article.id}}">
+            Bearbeiten
+          </button>
+        </td>
 
         <td>
           <button type="button" data-index="{{article.id}}" class="btn btn-danger delete-article"> 
             Artikel l&ouml;schen
-
           </button>
       </td>
       </tr>
@@ -35,7 +44,7 @@
       
     </tbody>
   </table>
-
+</div>
   <script>
     // Delete article
     $(document).on('click','.delete-article',function(e){
@@ -57,8 +66,40 @@
 
         success: function(json)
         {
-          //console.log(json)
-            //document.getElementById('cart_quantity').textContent = json.cqty
+          $('#table').html(json);
+          //location.reload();
+        },
+        error: function(xhr, errmsg, err)
+        {
+
+        }
+      });
+    })
+
+
+
+
+
+    // Minus one article
+    $(document).on('click','.minusOne',function(e){
+
+      // prevent that the button is clicked by default
+      e.preventDefault();
+
+      // now use ajax
+      // ajax helps us send data to the backend without refreshing the complete Website
+      $.ajax({
+        type: 'POST',
+        url:  '{% url 'minusOne' %}',
+        data: {
+          // Now we grab the ID of the Aricle from the data-index={{article.id}}
+          product_id: $(this).data('index'),
+          csrfmiddlewaretoken:'{{csrf_token}}',
+          action: 'post'
+        },
+
+        success: function(json)
+        {
             location.reload();
         },
         error: function(xhr, errmsg, err)
